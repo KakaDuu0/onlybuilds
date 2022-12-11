@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "com.bmuschko.docker-spring-boot-application" version "9.0.1"
+}
+
+group 'org.example'
+version '1.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-parent:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.json:json:20220924'
+    implementation 'javax.mail:mail:1.5.0-b01'
+    //implementation 'com.google.cloud:spring-cloud-gcp-dependencies:3.3.0'
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+jar {
+    manifest {
+        attributes (
+                'Main-Class': 'com.example.etracker.EtrackerApplication',
+                'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+        )
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
